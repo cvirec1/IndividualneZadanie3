@@ -12,7 +12,7 @@ namespace BankSystem
 {
     public partial class frmClientManagement : Form
     {
-
+        ClientManagementViewModel clientManagementViewModel = new ClientManagementViewModel();
         /// <summary>
         /// Backup, do not really use :)
         /// </summary>
@@ -25,7 +25,10 @@ namespace BankSystem
         public frmClientManagement(int clientId)
         {
             InitializeComponent();
+            dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(clientId);
+            dgwAcountData.DataMember = "Account";
         }
+        
 
         private void cmdUpdate_Click(object sender, EventArgs e)
         {

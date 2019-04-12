@@ -12,6 +12,7 @@ namespace BankSystem
 {
     public partial class frmMain : Form
     {
+        MainViewModel mainViewModel = new MainViewModel();
         public frmMain()
         {
             InitializeComponent();
@@ -19,10 +20,18 @@ namespace BankSystem
 
         private void cmdFindClient_Click(object sender, EventArgs e)
         {
-            using (frmClientManagement newForm = new frmClientManagement())
-            {
-                newForm.ShowDialog();
+            if (mainViewModel.CheckClient(txbIdNumber.Text))
+            {                
+                using (frmClientManagement newForm = new frmClientManagement(mainViewModel.GetID(txbIdNumber.Text)))
+                {
+                    newForm.ShowDialog();
+                }
             }
+            else
+            {
+                cmdFindClient.BackColor = Color.Red;
+            }
+            
         }
 
         private void cmdNewAccount_Click(object sender, EventArgs e)

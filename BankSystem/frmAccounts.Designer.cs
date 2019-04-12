@@ -28,45 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.cmdManageAccount = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.txbName = new System.Windows.Forms.TextBox();
+            this.txbSurname = new System.Windows.Forms.TextBox();
+            this.txbIDNumber = new System.Windows.Forms.TextBox();
+            this.dgwAccounts = new System.Windows.Forms.DataGridView();
+            this.lblName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwAccounts)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.Color.Crimson;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(16, 80);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(746, 188);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Tu bude v gride prehľad účtov a klientov, ktorým patria.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            this.label3.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(16, 7);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(746, 68);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Tu bude filter na vyhľadávanie klienta/účtu";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cmdManageAccount
             // 
-            this.cmdManageAccount.Location = new System.Drawing.Point(341, 272);
-            this.cmdManageAccount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmdManageAccount.Location = new System.Drawing.Point(256, 234);
             this.cmdManageAccount.Name = "cmdManageAccount";
-            this.cmdManageAccount.Size = new System.Drawing.Size(100, 46);
+            this.cmdManageAccount.Size = new System.Drawing.Size(75, 37);
             this.cmdManageAccount.TabIndex = 10;
             this.cmdManageAccount.Text = "Manage account";
             this.cmdManageAccount.UseVisualStyleBackColor = true;
@@ -76,36 +54,106 @@
             // 
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.ForeColor = System.Drawing.Color.Indigo;
-            this.label4.Location = new System.Drawing.Point(181, 322);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(136, 262);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(423, 112);
+            this.label4.Size = new System.Drawing.Size(317, 91);
             this.label4.TabIndex = 11;
             this.label4.Text = "^\r\nButton na menežovanie aktuálne zvoleného účtu v gride";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // txbName
+            // 
+            this.txbName.Location = new System.Drawing.Point(12, 21);
+            this.txbName.Name = "txbName";
+            this.txbName.Size = new System.Drawing.Size(100, 20);
+            this.txbName.TabIndex = 12;
+            this.txbName.TextChanged += new System.EventHandler(this.txbName_TextChanged);
+            // 
+            // txbSurname
+            // 
+            this.txbSurname.Location = new System.Drawing.Point(241, 21);
+            this.txbSurname.Name = "txbSurname";
+            this.txbSurname.Size = new System.Drawing.Size(100, 20);
+            this.txbSurname.TabIndex = 13;
+            this.txbSurname.TextChanged += new System.EventHandler(this.txbSurname_TextChanged);
+            // 
+            // txbIDNumber
+            // 
+            this.txbIDNumber.Location = new System.Drawing.Point(472, 21);
+            this.txbIDNumber.Name = "txbIDNumber";
+            this.txbIDNumber.Size = new System.Drawing.Size(100, 20);
+            this.txbIDNumber.TabIndex = 14;
+            this.txbIDNumber.TextChanged += new System.EventHandler(this.txbIDNumber_TextChanged);
+            // 
+            // dgwAccounts
+            // 
+            this.dgwAccounts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwAccounts.Location = new System.Drawing.Point(13, 47);
+            this.dgwAccounts.Name = "dgwAccounts";
+            this.dgwAccounts.Size = new System.Drawing.Size(559, 181);
+            this.dgwAccounts.TabIndex = 15;
+            this.dgwAccounts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAccounts_CellContentClick);
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(12, 2);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(41, 13);
+            this.lblName.TabIndex = 16;
+            this.lblName.Text = "Name :";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(238, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Surname :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(469, 2);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "ID number :";
+            // 
             // frmAccounts
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 433);
+            this.ClientSize = new System.Drawing.Size(584, 352);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.dgwAccounts);
+            this.Controls.Add(this.txbIDNumber);
+            this.Controls.Add(this.txbSurname);
+            this.Controls.Add(this.txbName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdManageAccount);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmAccounts";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmClients";
+            this.Load += new System.EventHandler(this.frmAccounts_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgwAccounts)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button cmdManageAccount;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txbName;
+        private System.Windows.Forms.TextBox txbSurname;
+        private System.Windows.Forms.TextBox txbIDNumber;
+        private System.Windows.Forms.DataGridView dgwAccounts;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
