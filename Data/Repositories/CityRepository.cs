@@ -31,5 +31,39 @@ namespace Data.Repositories
             }                
             return ds;
         }
+
+        public int GetCityID(string city)
+        {
+            int cislo = 0;
+            string sqlGetClientId = @" select id from city where name = @city;";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlGetClientId, connection))
+                        {
+                            sqlCmd.Parameters.Add("@city", SqlDbType.NVarChar).Value = city;
+                            cislo = (int)sqlCmd.ExecuteScalar();
+                            if (cislo >= 1)
+                            {
+                                return cislo;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return cislo;
+        }
     }
 }

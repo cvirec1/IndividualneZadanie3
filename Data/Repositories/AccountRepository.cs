@@ -14,6 +14,7 @@ namespace Data.Repositories
 {
     public class AccountRepository : Connection
     {
+        public int _accountID;
         public DataSet FillDataSet()
         {
             string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id ";
@@ -66,6 +67,45 @@ namespace Data.Repositories
             return ds;
         }
 
+        public bool InsertAccount(Account account)
+        {
+            string sqlInsertAccount = @" insert into Account (Id_Client,Id_Bank,Amount,IBAN,OverFlowLimit)
+  output inserted.id values (@client,@bank,@amount,@iban,@limit);";                        
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@client", SqlDbType.Int).Value = account.ID_Client;
+                            sqlCmd.Parameters.Add("@bank", SqlDbType.Int).Value = account.ID_Bank;
+                            sqlCmd.Parameters.Add("@amount", SqlDbType.Decimal).Value = account.Amount;
+                            sqlCmd.Parameters.Add("@iban", SqlDbType.NVarChar).Value = account.IBAN;
+                            sqlCmd.Parameters.Add("@limit", SqlDbType.Int).Value = account.OverFlowLimit;
+                            _accountID = (int)sqlCmd.ExecuteScalar();
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
         public void IsValidIBan(string iban)
         {
             try
@@ -84,7 +124,7 @@ namespace Data.Repositories
             Iban iban = new IbanBuilder().CountryCode(CountryCode.GetCountryCode("SK"))
                 .BankCode("1100")
                 .AccountNumberPrefix("000000")
-                .AccountNumber("29945641545")
+                .AccountNumber("3650018070")
                 .Build();
             IsValidIBan(iban.ToString());
             return iban.ToString();                          

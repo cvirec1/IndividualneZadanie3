@@ -12,6 +12,7 @@ namespace Data.Repositories
 {
     public class ClientRepository:Connection
     {
+        public int _clientID;
         public bool FindClient(string id)
         {
             string sqlFindClient = @" select count(*) from client where idnumber = @idnumber;";
@@ -139,27 +140,9 @@ namespace Data.Repositories
         public bool InsertClient(Client client)
         {
             string sqlInsertClient = @" insert into client (firstname,lastname,Adress,Id_City,IdNumber) output inserted.id values  (@name,@surname,@adress,@city,@idnumber);";
-            string sqlSelectCity = @" select id from city where name = @cityname;";
-            int cityId;
+            //string sqlSelectCity = @" select id from city where name = @cityname;";            
             try
-            {
-                using (SqlConnection connection = base.CreateConnection())
-                {
-                    connection.Open();
-                    try
-                    {
-                        using (SqlCommand sqlCmd = new SqlCommand(sqlSelectCity, connection))
-                        {
-                            sqlCmd.Parameters.Add("@cityname", SqlDbType.Int).Value = "Zilina";
-                            cityId = (int)sqlCmd.ExecuteScalar();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
-
-                }
+            {                
                 using (SqlConnection connection = base.CreateConnection())
                 {
                     connection.Open();
@@ -171,7 +154,8 @@ namespace Data.Repositories
                             sqlCmd.Parameters.Add("@surname", SqlDbType.NVarChar).Value = client.LastName;
                             sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = client.IDNumber;
                             sqlCmd.Parameters.Add("@adress", SqlDbType.NVarChar).Value = client.Adress;
-                            sqlCmd.Parameters.Add("@city", SqlDbType.Int).Value = cityId;                            
+                            sqlCmd.Parameters.Add("@city", SqlDbType.Int).Value = client.ID_City;
+                            _clientID = (int)sqlCmd.ExecuteScalar();
                             if(sqlCmd.ExecuteNonQuery() > 0)
                             {
                                 return true;

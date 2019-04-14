@@ -14,6 +14,7 @@ namespace Data.Models
         public DateTime ExecuteDate { get;private set; }
         public int VS { get; set; }
         public int SS { get; set; }
-        public int KS { get; set; }        
+        public int KS { get; set; }
+        public char TransacitonType { get; set; }
     }
 }
