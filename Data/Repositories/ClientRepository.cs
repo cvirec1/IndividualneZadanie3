@@ -14,7 +14,7 @@ namespace Data.Repositories
     {
         public bool FindClient(string id)
         {
-            string sqlFindClient = @" select count(*) from client where idnumber like @idnumber;";
+            string sqlFindClient = @" select count(*) from client where idnumber = @idnumber;";
             try
             {
                 using (SqlConnection connection = base.CreateConnection())
@@ -24,7 +24,7 @@ namespace Data.Repositories
                     {
                         using (SqlCommand sqlCmd = new SqlCommand(sqlFindClient, connection))
                         {
-                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = $"%{id}%";
+                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = id;
                             int cislo = (int)sqlCmd.ExecuteScalar();
                             if (cislo == 1)
                             {
@@ -48,7 +48,7 @@ namespace Data.Repositories
         public int GetClientID(string id)
         {
             int cislo = 0;
-            string sqlGetClientId = @" select id from client where idnumber like @idnumber;";
+            string sqlGetClientId = @" select id from client where idnumber = @idnumber;";
             try
             {
                 using (SqlConnection connection = base.CreateConnection())
@@ -58,9 +58,9 @@ namespace Data.Repositories
                     {
                         using (SqlCommand sqlCmd = new SqlCommand(sqlGetClientId, connection))
                         {
-                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = $"%{id}%";
+                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = id;
                             cislo = (int)sqlCmd.ExecuteScalar();
-                            if (cislo > 1)
+                            if (cislo >= 1)
                             {
                                 return cislo;
                             }
@@ -162,6 +162,8 @@ namespace Data.Repositories
             {
                 Debug.WriteLine(e.Message);
             }
+
+
             return ds;
         }
     }

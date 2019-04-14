@@ -12,9 +12,19 @@ namespace BankSystem
     class ClientManagementViewModel
     {
         ClientRepository clientRepository = new ClientRepository();
+        CardRepository cardRepository = new CardRepository();
+        TransactionRepository transactionRepository = new TransactionRepository();
         public DataSet GetAccountsData(int id)
         {
             return clientRepository.FillDataSet(id);
+        }
+        public DataSet GetCardsData(int id)
+        {
+            return cardRepository.FillDataSet(id);
+        }
+        public int GetAccountID(int id)
+        {
+            return transactionRepository.GetAccountID(id);
         }
     }
 }

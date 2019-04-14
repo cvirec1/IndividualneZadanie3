@@ -13,6 +13,7 @@ namespace BankSystem
     public partial class frmClientManagement : Form
     {
         ClientManagementViewModel clientManagementViewModel = new ClientManagementViewModel();
+        int number;
         /// <summary>
         /// Backup, do not really use :)
         /// </summary>
@@ -27,11 +28,15 @@ namespace BankSystem
             InitializeComponent();
             dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(clientId);
             dgwAcountData.DataMember = "Account";
+            dgwCardData.DataSource = clientManagementViewModel.GetCardsData(clientId);
+            dgwCardData.DataMember = "Card";
+            number = clientId;
         }
         
 
         private void cmdUpdate_Click(object sender, EventArgs e)
         {
+            
             using (frmAccount newForm = new frmAccount(42))
             {
                 newForm.ShowDialog();
@@ -56,7 +61,8 @@ namespace BankSystem
 
         private void cmdAllTransactions_Click(object sender, EventArgs e)
         {
-            using (frmTransactions newForm = new frmTransactions(42))
+            
+            using (frmTransactions newForm = new frmTransactions(clientManagementViewModel.GetAccountID(number)))
             {
                 newForm.ShowDialog();
             }
@@ -72,7 +78,7 @@ namespace BankSystem
 
         private void cmdCloseAccount_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Hodor?", "Hodor!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want close Management?", "Really!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 DialogResult = DialogResult.OK;
             }

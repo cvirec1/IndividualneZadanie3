@@ -34,7 +34,6 @@
             this.cmdAllTransactions = new System.Windows.Forms.Button();
             this.cmdWithdrawal = new System.Windows.Forms.Button();
             this.cmdDeposit = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -42,7 +41,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.dgwAcountData = new System.Windows.Forms.DataGridView();
+            this.dgwCardData = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).BeginInit();
             this.SuspendLayout();
             // 
             // cmdUpdate
@@ -104,18 +105,6 @@
             this.cmdDeposit.Text = "Deposit";
             this.cmdDeposit.UseVisualStyleBackColor = true;
             this.cmdDeposit.Click += new System.EventHandler(this.cmdDeposit_Click);
-            // 
-            // label2
-            // 
-            this.label2.BackColor = System.Drawing.Color.DarkMagenta;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(749, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(190, 389);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Niekde v tomto okne bude grid s platobnými kartami priradenými k účtu.";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
@@ -191,11 +180,20 @@
             this.dgwAcountData.Size = new System.Drawing.Size(723, 73);
             this.dgwAcountData.TabIndex = 18;
             // 
+            // dgwCardData
+            // 
+            this.dgwCardData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwCardData.Location = new System.Drawing.Point(741, 12);
+            this.dgwCardData.Name = "dgwCardData";
+            this.dgwCardData.Size = new System.Drawing.Size(253, 234);
+            this.dgwCardData.TabIndex = 19;
+            // 
             // frmClientManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 410);
+            this.ClientSize = new System.Drawing.Size(1006, 410);
+            this.Controls.Add(this.dgwCardData);
             this.Controls.Add(this.dgwAcountData);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -203,7 +201,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdDeposit);
             this.Controls.Add(this.cmdWithdrawal);
             this.Controls.Add(this.cmdAllTransactions);
@@ -212,8 +209,9 @@
             this.Controls.Add(this.cmdUpdate);
             this.Name = "frmClientManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "frmClientManagement";
+            this.Text = "Client Management";
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -225,7 +223,6 @@
         private System.Windows.Forms.Button cmdAllTransactions;
         private System.Windows.Forms.Button cmdWithdrawal;
         private System.Windows.Forms.Button cmdDeposit;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -233,5 +230,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView dgwAcountData;
+        private System.Windows.Forms.DataGridView dgwCardData;
     }
 }

@@ -12,6 +12,7 @@ namespace BankSystem
 {
     public partial class frmTransactions : Form
     {
+        TransactionsViewModel transactionsViewModel = new TransactionsViewModel();
 
         /// <summary>
         /// Used when viewing all transactions.
@@ -19,6 +20,8 @@ namespace BankSystem
         public frmTransactions()
         {
             InitializeComponent();
+            dgwTransactions.DataSource = transactionsViewModel.GetTransactionsData();
+            dgwTransactions.DataMember = "Transaction";
         }
 
         /// <summary>
@@ -27,7 +30,11 @@ namespace BankSystem
         /// <param name="clientId"></param>
         public frmTransactions(int clientId)
         {
+
             InitializeComponent();
+            dgwTransactions.DataSource = transactionsViewModel.GetAccountsTransactionsData(clientId);
+            dgwTransactions.DataMember = "Transaction";           
+
         }
     }
 }
