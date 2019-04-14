@@ -10,14 +10,19 @@ using System.Windows.Forms;
 
 namespace BankSystem
 {
+
     public partial class frmAccount : Form
     {
+        AccountViewModel accountViewModel = new AccountViewModel();
         /// <summary>
         /// Used when adding new account.
         /// </summary>
         public frmAccount()
         {
             InitializeComponent();
+            cbxCity.DataSource = accountViewModel.FillComboBoxCity();
+            cbxCity.DisplayMember = "Name";
+            cbxCity.ValueMember = "Id";
         }
 
         /// <summary>
@@ -27,6 +32,20 @@ namespace BankSystem
         public frmAccount(int clientId)
         {
             InitializeComponent();
+        }
+
+        private void btnInsertClient_Click(object sender, EventArgs e)
+        {
+            accountViewModel._firstName = txbFirstName.Text;
+            accountViewModel._lastName = txbLastName.Text;
+            accountViewModel._idNumber = txbIDNumber.Text;
+            accountViewModel._adress = txbAdress.Text;
+            //accountViewModel._idCity = cbxCity.SelectedValue();
+        }
+
+        private void cbxCity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

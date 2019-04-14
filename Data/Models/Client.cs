@@ -9,6 +9,7 @@ namespace Data.Models
     public class Client
     {
         public int ID { get;private set; }
+        public string IDNumber { get; set; }
         public int ID_City { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

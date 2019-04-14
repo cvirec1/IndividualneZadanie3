@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Controls;
+using Data.Models;
 
 namespace BankSystem
 {
@@ -16,6 +18,10 @@ namespace BankSystem
         public frmMain()
         {
             InitializeComponent();
+            Generator generator = new Generator();
+            //IEnumerable<string> aaa = generator.GetRandomBanks(10);
+            //IEnumerable<string> bbb = generator.GetRandomAddresses(10);
+            //IEnumerable<string> ccc = generator.GetRandomPeople(10);
         }
 
         private void cmdFindClient_Click(object sender, EventArgs e)

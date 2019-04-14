@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using sinkien.IBAN4Net;
 
 namespace Data.Repositories
 {
-    public class AccountRepository:Connection
+    public class AccountRepository : Connection
     {
         public DataSet FillDataSet()
         {
@@ -36,7 +37,7 @@ namespace Data.Repositories
             return ds;
         }
 
-        public DataSet FilterDataSet(string name, string surname,string number)
+        public DataSet FilterDataSet(string name, string surname, string number)
         {
             string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id 
   where (firstname like @name and lastname like @surname) and c.idnumber like @idnumber";
@@ -65,6 +66,29 @@ namespace Data.Repositories
             return ds;
         }
 
+        public void IsValidIBan(string iban)
+        {
+            try
+            {
+                IbanUtils.Validate(iban);
+            }
+            catch (IbanFormatException iex)
+            {
+                Debug.WriteLine(iex.Message);
+            }
+        }
+
         
+        public string GenerateIBAN()
+        {
+            Iban iban = new IbanBuilder().CountryCode(CountryCode.GetCountryCode("SK"))
+                .BankCode("1100")
+                .AccountNumberPrefix("000000")
+                .AccountNumber("29945641545")
+                .Build();
+            IsValidIBan(iban.ToString());
+            return iban.ToString();                          
+        }
     }
 }
+
