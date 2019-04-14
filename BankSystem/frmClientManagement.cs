@@ -83,5 +83,23 @@ namespace BankSystem
                 DialogResult = DialogResult.OK;
             }
         }
+
+        private void btnAllCard_Click(object sender, EventArgs e)
+        {
+            dgwCardData.DataSource = clientManagementViewModel.GetCardsData(number);
+            dgwCardData.DataMember = "Card";
+        }
+
+        private void btnActiveCard_Click(object sender, EventArgs e)
+        {
+            dgwCardData.DataSource = clientManagementViewModel.GetActiveCardsData(number);
+            dgwCardData.DataMember = "Card";
+        }
+
+        private void btnExpiredCard_Click(object sender, EventArgs e)
+        {
+            dgwCardData.DataSource = clientManagementViewModel.GetExpiredCardsData(number);
+            dgwCardData.DataMember = "Card";
+        }
     }
 }

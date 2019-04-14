@@ -22,6 +22,14 @@ namespace BankSystem
         {
             return cardRepository.FillDataSet(id);
         }
+        public DataSet GetActiveCardsData(int id)
+        {
+            return cardRepository.ActiveCard(id);
+        }
+        public DataSet GetExpiredCardsData(int id)
+        {
+            return cardRepository.ExpiredCard(id);
+        }
         public int GetAccountID(int id)
         {
             return transactionRepository.GetAccountID(id);

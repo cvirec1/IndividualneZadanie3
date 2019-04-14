@@ -42,6 +42,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dgwAcountData = new System.Windows.Forms.DataGridView();
             this.dgwCardData = new System.Windows.Forms.DataGridView();
+            this.btnAllCard = new System.Windows.Forms.Button();
+            this.btnActiveCard = new System.Windows.Forms.Button();
+            this.btnExpiredCard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).BeginInit();
             this.SuspendLayout();
@@ -185,14 +188,47 @@
             this.dgwCardData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwCardData.Location = new System.Drawing.Point(741, 12);
             this.dgwCardData.Name = "dgwCardData";
-            this.dgwCardData.Size = new System.Drawing.Size(253, 234);
+            this.dgwCardData.Size = new System.Drawing.Size(285, 234);
             this.dgwCardData.TabIndex = 19;
+            // 
+            // btnAllCard
+            // 
+            this.btnAllCard.Location = new System.Drawing.Point(741, 255);
+            this.btnAllCard.Name = "btnAllCard";
+            this.btnAllCard.Size = new System.Drawing.Size(96, 23);
+            this.btnAllCard.TabIndex = 20;
+            this.btnAllCard.Text = "Active/Expired";
+            this.btnAllCard.UseVisualStyleBackColor = true;
+            this.btnAllCard.Click += new System.EventHandler(this.btnAllCard_Click);
+            // 
+            // btnActiveCard
+            // 
+            this.btnActiveCard.Location = new System.Drawing.Point(843, 255);
+            this.btnActiveCard.Name = "btnActiveCard";
+            this.btnActiveCard.Size = new System.Drawing.Size(85, 23);
+            this.btnActiveCard.TabIndex = 21;
+            this.btnActiveCard.Text = "Active Card";
+            this.btnActiveCard.UseVisualStyleBackColor = true;
+            this.btnActiveCard.Click += new System.EventHandler(this.btnActiveCard_Click);
+            // 
+            // btnExpiredCard
+            // 
+            this.btnExpiredCard.Location = new System.Drawing.Point(934, 255);
+            this.btnExpiredCard.Name = "btnExpiredCard";
+            this.btnExpiredCard.Size = new System.Drawing.Size(92, 23);
+            this.btnExpiredCard.TabIndex = 22;
+            this.btnExpiredCard.Text = "Expired Card";
+            this.btnExpiredCard.UseVisualStyleBackColor = true;
+            this.btnExpiredCard.Click += new System.EventHandler(this.btnExpiredCard_Click);
             // 
             // frmClientManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 410);
+            this.ClientSize = new System.Drawing.Size(1029, 410);
+            this.Controls.Add(this.btnExpiredCard);
+            this.Controls.Add(this.btnActiveCard);
+            this.Controls.Add(this.btnAllCard);
             this.Controls.Add(this.dgwCardData);
             this.Controls.Add(this.dgwAcountData);
             this.Controls.Add(this.label8);
@@ -231,5 +267,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView dgwAcountData;
         private System.Windows.Forms.DataGridView dgwCardData;
+        private System.Windows.Forms.Button btnAllCard;
+        private System.Windows.Forms.Button btnActiveCard;
+        private System.Windows.Forms.Button btnExpiredCard;
     }
 }

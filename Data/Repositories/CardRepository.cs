@@ -53,5 +53,84 @@ namespace Data.Repositories
             }
             return ds;
         }
+
+        public DataSet ActiveCard(int id)
+        {
+            string sqlQuery = @"select c.[Id]
+      ,[Number]
+      ,[DailyLimit]
+      ,[Id_Account]
+      ,c.[ExpireDate]
+      ,[Pin] from Card as c
+  join Account as a on c.Id_Account=a.Id
+   where Id_Client = @id and (c.[ExpireDate] > getdate())";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                            adapter.Fill(ds, "Card");
+                            DataTable dt = ds.Tables["Card"];
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return ds;
+        }
+        public DataSet ExpiredCard(int id)
+        {
+            string sqlQuery = @"select c.[Id]
+      ,[Number]
+      ,[DailyLimit]
+      ,[Id_Account]
+      ,c.[ExpireDate]
+      ,[Pin] from Card as c
+  join Account as a on c.Id_Account=a.Id
+   where Id_Client = @id and (c.[ExpireDate] < getdate())";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                            adapter.Fill(ds, "Card");
+                            DataTable dt = ds.Tables["Card"];
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return ds;
+        }
     }
 }
