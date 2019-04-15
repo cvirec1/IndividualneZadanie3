@@ -58,7 +58,7 @@ namespace BankSystem
 
         private void cmdDeposit_Click(object sender, EventArgs e)
         {
-            using (frmTransaction newForm = new frmTransaction())
+            using (frmTransaction newForm = new frmTransaction('D',indexAccount))
             {
                 newForm.ShowDialog();
             }
@@ -66,7 +66,7 @@ namespace BankSystem
 
         private void cmdWithdrawal_Click(object sender, EventArgs e)
         {
-            using (frmTransaction newForm = new frmTransaction())
+            using (frmTransaction newForm = new frmTransaction('W',indexAccount))
             {
                 newForm.ShowDialog();
             }
@@ -83,7 +83,7 @@ namespace BankSystem
 
         private void cmdNewTransaction_Click(object sender, EventArgs e)
         {
-            using (frmTransaction newForm = new frmTransaction())
+            using (frmTransaction newForm = new frmTransaction('T',indexAccount))
             {
                 newForm.ShowDialog();
             }

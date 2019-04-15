@@ -38,6 +38,60 @@ namespace Data.Repositories
             return ds;
         }
 
+        public DataSet FillSourceDataSet(int id)
+        {
+            string sqlQuery = @"select id,iban,Amount from Account where id = @id";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                        adapter.Fill(ds, "Account");
+                        DataTable dt = ds.Tables["Account"];
+                    }                        
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+
+            return ds;
+        }
+
+        public DataSet FillDestinationDataSet(int id)
+        {
+            string sqlQuery = @"select id,iban,Amount from Account where id != @id";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                        adapter.Fill(ds, "Account");
+                        DataTable dt = ds.Tables["Account"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+
+            return ds;
+        }
+
         public DataSet FilterDataSet(string name, string surname, string number)
         {
             string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id 

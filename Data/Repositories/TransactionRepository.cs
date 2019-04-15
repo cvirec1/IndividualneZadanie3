@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
+using Data.Models;
 
 namespace Data.Repositories
 {
@@ -112,6 +113,70 @@ namespace Data.Repositories
                 Debug.WriteLine(e.Message);
             }
             return cislo;
+        }
+
+        public bool InsertTransaction(Transaction transaction,int id)
+        {
+            int transactionID=0;
+            string sqlInsertTransaction = @"insert into [Transaction] (Amount,TransactionType)
+  output inserted.id values (@amount,@type);";
+            string sqlInsertAccountTransaction;
+
+
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertTransaction, connection))
+                        {
+                            sqlCmd.Parameters.Add("@amount", SqlDbType.Decimal).Value = transaction.Amount;
+                            sqlCmd.Parameters.Add("@type", SqlDbType.Char).Value = transaction.TransacitonType;                            
+                            transactionID = (int)sqlCmd.ExecuteScalar();                            
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                    try
+                    {
+                        if (transaction.TransacitonType == 'D')
+                        {
+                            sqlInsertAccountTransaction = @"insert into AccountTransaction (Id_Destination_Account,Id_Transaction)
+  values (@id,@tr);";
+                        }
+                        else
+                        {
+                            sqlInsertAccountTransaction = @"insert into AccountTransaction (Id_Account,Id_Transaction)
+  values (@id,@tr);";
+                        }
+
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccountTransaction, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            sqlCmd.Parameters.Add("@tr", SqlDbType.Int).Value = transactionID;
+                            int stav = (int)sqlCmd.ExecuteScalar();
+                            if (stav > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return false;
         }
 
     }
