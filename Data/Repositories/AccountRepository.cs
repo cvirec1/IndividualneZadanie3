@@ -67,7 +67,8 @@ namespace Data.Repositories
 
         public DataSet FillDestinationDataSet(int id)
         {
-            string sqlQuery = @"select id,iban,Amount from Account where id != @id";
+            string sqlQuery = @"select a.id,iban,CONCAT(FirstName,' ',LastName) as ClientName from Account as a
+join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)";
             DataSet ds = new DataSet();
             try
             {
@@ -196,6 +197,135 @@ namespace Data.Repositories
             return false;
         }
 
+        public bool UpdateAccountAmount(int id)
+        {
+            string sqlInsertAccount = @" update Account
+set Amount = Amount + (
+select top 1 case
+when t.TransactionType = 'W' then t.Amount * (-1)
+else t.Amount
+end
+from [Transaction] as t
+JOIN AccountTransaction as act
+ON t.Id = act.Id_Transaction
+WHERE act.Id_Destination_Account = @id OR act.Id_Account = @id
+ORDER BY t.Id desc)
+where id = @id";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {                            
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public bool UpdateSourceAccountAmount(int id)
+        {
+            string sqlInsertAccount = @" update Account
+set Amount = Amount - (
+select top 1 case
+when t.TransactionType = 'T' then t.Amount
+end
+from [Transaction] as t
+JOIN AccountTransaction as act
+ON t.Id = act.Id_Transaction
+WHERE act.Id_Destination_Account = @id OR act.Id_Account = @id
+ORDER BY t.Id desc)
+where id = @id";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public bool UpdateDestinationAccountAmount(int id)
+        {
+            string sqlInsertAccount = @" update Account
+set Amount = Amount + (
+select top 1 case
+when t.TransactionType = 'T' then t.Amount
+end
+from [Transaction] as t
+JOIN AccountTransaction as act
+ON t.Id = act.Id_Transaction
+WHERE act.Id_Destination_Account = @id OR act.Id_Account = @id
+ORDER BY t.Id desc)
+where id = @id";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
         public void IsValidIBan(string iban)
         {
             try

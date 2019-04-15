@@ -15,6 +15,9 @@ namespace BankSystem
         AccountRepository accountRepository = new AccountRepository();
         public decimal _ammount;
         public char _type;
+        public int _vs;
+        public int _ss;
+        public int _ks;
         public DataSet FillDestination(int id)
         {
             return accountRepository.FillDestinationDataSet(id);
@@ -28,7 +31,19 @@ namespace BankSystem
             Transaction transaction = new Transaction();
             transaction.Amount = _ammount;
             transaction.TransacitonType = _type;
-            return transactionRepository.InsertTransaction(transaction, id);            
+            return transactionRepository.InsertTransaction(transaction, id);
+        }
+        public bool UpdateAmount(int id)
+        {
+            return accountRepository.UpdateAccountAmount(id);
+        }
+        public bool UpdateSourceAmount(int id)
+        {
+            return accountRepository.UpdateSourceAccountAmount(id);
+        }
+        public bool UpdateDestinationAmount(int id)
+        {
+            return accountRepository.UpdateDestinationAccountAmount(id);
         }
     }
 }
