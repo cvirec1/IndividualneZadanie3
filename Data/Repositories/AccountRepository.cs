@@ -17,7 +17,7 @@ namespace Data.Repositories
         public int _accountID;
         public DataSet FillDataSet()
         {
-            string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id ";
+            string sqlQuery = @"select a.id,c.id as clientID,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id ";
             DataSet ds = new DataSet();
             try
             {

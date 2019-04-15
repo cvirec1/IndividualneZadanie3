@@ -183,18 +183,25 @@
             // 
             // dgwAcountData
             // 
+            this.dgwAcountData.AllowUserToAddRows = false;
+            this.dgwAcountData.AllowUserToDeleteRows = false;
             this.dgwAcountData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwAcountData.Location = new System.Drawing.Point(12, 10);
             this.dgwAcountData.Name = "dgwAcountData";
+            this.dgwAcountData.ReadOnly = true;
             this.dgwAcountData.Size = new System.Drawing.Size(723, 73);
             this.dgwAcountData.TabIndex = 18;
+            this.dgwAcountData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAcountData_CellContentClick);
             this.dgwAcountData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAcountData_RowEnter);
             // 
             // dgwCardData
             // 
+            this.dgwCardData.AllowUserToAddRows = false;
+            this.dgwCardData.AllowUserToDeleteRows = false;
             this.dgwCardData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwCardData.Location = new System.Drawing.Point(741, 12);
             this.dgwCardData.Name = "dgwCardData";
+            this.dgwCardData.ReadOnly = true;
             this.dgwCardData.Size = new System.Drawing.Size(334, 234);
             this.dgwCardData.TabIndex = 19;
             this.dgwCardData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwCardData_RowEnter);

@@ -87,12 +87,16 @@
             // 
             // dgwAccounts
             // 
+            this.dgwAccounts.AllowUserToAddRows = false;
+            this.dgwAccounts.AllowUserToDeleteRows = false;
             this.dgwAccounts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwAccounts.Location = new System.Drawing.Point(13, 47);
             this.dgwAccounts.Name = "dgwAccounts";
+            this.dgwAccounts.ReadOnly = true;
             this.dgwAccounts.Size = new System.Drawing.Size(559, 181);
             this.dgwAccounts.TabIndex = 15;
             this.dgwAccounts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAccounts_CellContentClick);
+            this.dgwAccounts.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAccounts_RowEnter);
             // 
             // lblName
             // 

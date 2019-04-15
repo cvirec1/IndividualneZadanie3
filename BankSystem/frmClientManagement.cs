@@ -171,5 +171,10 @@ namespace BankSystem
             indexAccount = (int)dgwAcountData.Rows[e.RowIndex].Cells[0].Value;
             indexClient = (int)dgwAcountData.Rows[e.RowIndex].Cells[1].Value;
         }
+
+        private void dgwAcountData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
