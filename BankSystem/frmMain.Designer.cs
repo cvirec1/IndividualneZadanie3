@@ -240,7 +240,7 @@
             this.Location = new System.Drawing.Point(600, 200);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Bank System";
+            this.Text = "Islam Bank System";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

@@ -15,6 +15,11 @@ namespace Data.Repositories
     {
         int _cardID;
         int _accountID;
+        /// <summary>
+        /// Metoda na získanie hodnôt o kartách.
+        /// </summary>
+        /// <param name="id">id clienta</param>
+        /// <returns></returns>
         public DataSet FillDataSet(int id)
         {
             string sqlQuery = @"select c.[Id]
@@ -54,7 +59,11 @@ namespace Data.Repositories
             }
             return ds;
         }
-
+        /// <summary>
+        /// Metoda na nacitanie aktívnych kariet
+        /// </summary>
+        /// <param name="id">id client</param>
+        /// <returns></returns>
         public DataSet ActiveCard(int id)
         {
             string sqlQuery = @"select c.[Id]
@@ -94,6 +103,11 @@ namespace Data.Repositories
             }
             return ds;
         }
+        /// <summary>
+        /// Metoda na načítanie expirovaných kariet.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DataSet ExpiredCard(int id)
         {
             string sqlQuery = @"select c.[Id]
@@ -133,7 +147,12 @@ namespace Data.Repositories
             }
             return ds;
         }
-
+        /// <summary>
+        /// Metodá na vytvorenie novej karty.
+        /// </summary>
+        /// <param name="limit">limit karty</param>
+        /// <param name="id">id account</param>
+        /// <returns></returns>
         public bool InsertCard(int limit,int id)        
         {
             string sqlInsertAccount = @" insert into Card (number,dailyLimit,id_account,pin)
@@ -172,7 +191,11 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metóda na zrušenie karty.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool CancelCard(int id)
         {
             string sqlCancelCard = @" update card set expiredate = getdate() where id = @id;";
@@ -205,7 +228,12 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na overovanie karty v ATM
+        /// </summary>
+        /// <param name="id">id karty</param>
+        /// <param name="pin">pin karty</param>
+        /// <returns>true ak taka karta existuje</returns>
         public bool ControlCard(int id,int pin)
         {
             string sqlCheckCard = @" select COUNT(*) from [Card] where id = @id and pin =@pin and ExpireDate>GETDATE();";
@@ -239,7 +267,11 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na získanie id account.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int GetAccountID(int id)
         {
             string sqlCheckCard = @" select Id_Account from Card where id =@id;";
@@ -270,13 +302,19 @@ namespace Data.Repositories
                 throw e;
             }            
         }
-
+        /// <summary>
+        /// Metoda na generovanie cisla karty.
+        /// </summary>
+        /// <returns></returns>
         public int GenerateCardNumber()
         {
             Random random = new Random();            
             return random.Next(100000000,int.MaxValue);
         }
-
+        /// <summary>
+        /// Metoda na generovanie pin karty.
+        /// </summary>
+        /// <returns></returns>
         public string GenerateCardPIN()
         {
             Random random = new Random();

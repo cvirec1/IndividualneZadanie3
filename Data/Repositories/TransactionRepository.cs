@@ -12,6 +12,11 @@ namespace Data.Repositories
 {
     public class TransactionRepository:Connection
     {
+        /// <summary>
+        /// Metoda na naplnenie udajov o transakciach konkretneho uctu.
+        /// </summary>
+        /// <param name="id">id account</param>
+        /// <returns></returns>
         public DataSet FillAccountDataSet(int id)
         {
             string sqlQuery = @"select Id_Transaction,Id_Account as odosielatel,Id_Destination_Account as prijemca,tr.Amount,tr.CreationDate,tr.ExecuteDate,tr.KS,tr.SS,tr.VS
@@ -47,6 +52,10 @@ namespace Data.Repositories
             }
             return ds;
         }
+        /// <summary>
+        /// Metoda na naplnenie udajov o transakcii.
+        /// </summary>
+        /// <returns></returns>
         public DataSet FillDataSet()
         {
             string sqlQuery = @"select Id_Transaction,Id_Account as odosielatel,Id_Destination_Account as prijemca,tr.Amount,tr.CreationDate,tr.ExecuteDate,tr.KS,tr.SS,tr.VS,tr.transactiontype
@@ -80,7 +89,11 @@ namespace Data.Repositories
             }
             return ds;
         }
-
+        /// <summary>
+        /// Metoda na ziskanie id account na zaklade id klienta.
+        /// </summary>
+        /// <param name="id">id klient</param>
+        /// <returns></returns>
         public int GetAccountID(int id)
         {
             int cislo = 0;
@@ -114,7 +127,12 @@ namespace Data.Repositories
             }
             return cislo;
         }
-
+        /// <summary>
+        /// Metoda na vlozenie novej transakcie o vybere z uctu alebo vklade na ucet.
+        /// </summary>
+        /// <param name="transaction">transakcia</param>
+        /// <param name="id">id account</param>
+        /// <returns></returns>
         public bool InsertTransaction(Transaction transaction,int id)
         {
             int transactionID=0;
@@ -177,7 +195,13 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na vlozenie transakcie medzi dvoma uctami.
+        /// </summary>
+        /// <param name="transaction">transakcia</param>
+        /// <param name="source">zdrojovy ucet</param>
+        /// <param name="dest">cielovy ucet</param>
+        /// <returns></returns>
         public bool InsertTTransaction(Transaction transaction, int source,int dest)
         {
             int transactionID = 0;

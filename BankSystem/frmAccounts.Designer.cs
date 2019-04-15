@@ -136,7 +136,7 @@
             this.Controls.Add(this.cmdManageAccount);
             this.Name = "frmAccounts";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmClients";
+            this.Text = "List of accounts";
             this.Load += new System.EventHandler(this.frmAccounts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgwAccounts)).EndInit();
             this.ResumeLayout(false);

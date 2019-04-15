@@ -10,6 +10,10 @@ namespace Data.Repositories
 {
     public class Connection
     {
+        /// <summary>
+        /// Metoda na trudted vytvorenie connection.
+        /// </summary>
+        /// <returns></returns>
         public SqlConnection CreateConnection()
         {
             string connString = @"Server = VALJASEK\SQL2017; Database = BankSystem; Trusted_Connection = True;";

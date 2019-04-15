@@ -95,8 +95,9 @@ namespace BankSystem
 
         private void cmdCloseAccount_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want close Management?", "Really!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want close client account?", "Really!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
+                clientManagementViewModel.CloseAccount(indexAccount);
                 DialogResult = DialogResult.OK;
             }
         }

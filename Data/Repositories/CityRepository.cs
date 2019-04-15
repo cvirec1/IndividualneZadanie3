@@ -11,8 +11,13 @@ namespace Data.Repositories
 {
     public class CityRepository:Connection
     {
+        /// <summary>
+        /// Metoda na naplnenie miest.
+        /// </summary>
+        /// <returns></returns>
         public DataSet FillDataSet()
         {
+            
             DataSet ds = new DataSet();
             string sqlQuery = @"select * from city";
             try
@@ -31,7 +36,11 @@ namespace Data.Repositories
             }                
             return ds;
         }
-
+        /// <summary>
+        /// Metoda na získanie id mesta podla názvu mesta.
+        /// </summary>
+        /// <param name="city">nazov mesta</param>
+        /// <returns></returns>
         public int GetCityID(string city)
         {
             int cislo = 0;

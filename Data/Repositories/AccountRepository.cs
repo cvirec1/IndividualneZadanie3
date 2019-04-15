@@ -15,9 +15,16 @@ namespace Data.Repositories
     public class AccountRepository : Connection
     {
         public int _accountID;
+
+        /// <summary>
+        /// Metóda ktorá vráti zoznam učtov do datagrdiview v okne frmAccounts.
+        /// </summary>
+        /// <returns>Zoznam účtov klientov.</returns>
         public DataSet FillDataSet()
         {
-            string sqlQuery = @"select a.id,c.id as clientID,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id ";
+            string sqlQuery = @"select a.id,c.id as clientID,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id 
+  join Bank as b on a.Id_Bank = b.Id
+where a.Id_Bank =7 and ((expiredate is null) or (expiredate>getdate()))";
             DataSet ds = new DataSet();
             try
             {
@@ -37,7 +44,11 @@ namespace Data.Repositories
 
             return ds;
         }
-
+        /// <summary>
+        /// Metóda na naplnenie zdrojového gridu pri výbere peňazí z účtu v Bank systém a ATM.
+        /// </summary>
+        /// <param name="id">id z tabuľky Account</param>
+        /// <returns>DataSet</returns>
         public DataSet FillSourceDataSet(int id)
         {
             string sqlQuery = @"select id,iban,Amount from Account where id = @id";
@@ -64,7 +75,11 @@ namespace Data.Repositories
 
             return ds;
         }
-
+        /// <summary>
+        /// Metóda na naplnenie cieľového gridu pri vklade peňazí na účet.
+        /// </summary>
+        /// <param name="id">id z tabuľky Account</param>
+        /// <returns>DataSet</returns>
         public DataSet FillDestinationDataSet(int id)
         {
             string sqlQuery = @"select a.id,iban,CONCAT(FirstName,' ',LastName) as ClientName from Account as a
@@ -92,11 +107,19 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
 
             return ds;
         }
-
+        /// <summary>
+        /// Metóda na filtrovanie v okne frmAccounts na základe mena priezviska a idNumber
+        /// </summary>
+        /// <param name="name">meno klienta</param>
+        /// <param name="surname">priezvisko klienta</param>
+        /// <param name="number">idnumber klienta</param>
+        /// <returns>DataSet</returns>
         public DataSet FilterDataSet(string name, string surname, string number)
         {
-            string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id 
-  where (firstname like @name and lastname like @surname) and c.idnumber like @idnumber";
+            string sqlQuery = @"select a.id,c.id as clientID,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id 
+  join Bank as b on a.Id_Bank = b.Id
+where (a.Id_Bank =7 and ((expiredate is null) or (expiredate>getdate())))
+and ((firstname like @name and lastname like @surname) and c.idnumber like @idnumber)";
             DataSet ds = new DataSet();
             try
             {
@@ -121,7 +144,10 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
 
             return ds;
         }
-
+        /// <summary>
+        /// Prehľad koľko peňazi je vložených v banke.
+        /// </summary>
+        /// <returns>DataSet</returns>
         public DataSet ViewBankData()
         {
             string sqlQuery = @"select b.Name,sum(Amount) from Account as a
@@ -149,11 +175,15 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
 
             return ds;
         }
+        /// <summary>
+        /// Prehľad top 10 účtov v banke podľa najvyššej sumy na účte.
+        /// </summary>
+        /// <returns>DataSet</returns>
         public DataSet ViewTopAccount()
         {
             string sqlQuery = @"select top 10 c.FirstName,c.LastName,Amount,IBAN from Account as a
   join Client as c on a.Id_Client=c.id
-  where Id_Bank = 7
+  where Id_Bank = 7 and ((expiredate is null) or (expiredate>getdate()))
   order by Amount desc";
             DataSet ds = new DataSet();
             try
@@ -176,6 +206,10 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
 
             return ds;
         }
+        /// <summary>
+        /// Prehľad počtu úštov a banke.
+        /// </summary>
+        /// <returns>DataSet</returns>
         public DataSet ViewAccountCount()
         {
             string sqlQuery = @"select b.Name,count(*) as AccountCount from Account as a
@@ -203,7 +237,11 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
 
             return ds;
         }
-
+        /// <summary>
+        /// Vloženie účtu do databázy.
+        /// </summary>
+        /// <param name="account">Inštancia account</param>
+        /// <returns>bool</returns>
         public bool InsertAccount(Account account)
         {
             string sqlInsertAccount = @" insert into Account (Id_Client,Id_Bank,Amount,IBAN,OverFlowLimit)
@@ -242,7 +280,11 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
             }
             return false;
         }
-
+        /// <summary>
+        /// Metóda pre vrátenie sumy klienta na jeho účte.
+        /// </summary>
+        /// <param name="id">id účtu klienta</param>
+        /// <returns>suma vratená v string formáte</returns>
         public string GetAccountAmount(int id)
         {
             string amount;
@@ -277,10 +319,15 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
             }
             return amount;
         }
-
+        /// <summary>
+        /// Update účtu klienta kde je možné upraviť 
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
         public bool UpdateAccount(Account account, int accountID)
         {
-            string sqlInsertAccount = @" update Account set Amount=@amount,OverFlowLimit=@limit
+            string sqlUpdateAccount = @" update Account set Amount=@amount,OverFlowLimit=@limit
   where id = @id";
             try
             {
@@ -289,7 +336,7 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
                     connection.Open();
                     try
                     {
-                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlUpdateAccount, connection))
                         {
                             sqlCmd.Parameters.Add("@amount", SqlDbType.Decimal).Value = account.Amount;                          
                             sqlCmd.Parameters.Add("@limit", SqlDbType.Int).Value = account.OverFlowLimit;
@@ -313,7 +360,49 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
             }
             return false;
         }
+        /// <summary>
+        /// Metoda na nastavenie účtu expiredate
+        /// </summary>
+        /// <param name="accountID">accoun id</param>
+        /// <returns>bool</returns>
+        public bool CloseAccount(int accountID)
+        {
+            string sqlUpdateAccount = @" update Account set expiredate=getdate() where id = @id";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlUpdateAccount, connection))
+                        {
+                           
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = accountID;
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
 
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Metoda na odčítanie prípadne pričítanie sumy podľa typu transakcie ktorú klient vykonal. W-witdraw D+deposit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool UpdateAccountAmount(int id)
         {
             string sqlInsertAccount = @" update Account
@@ -357,7 +446,11 @@ where id = @id";
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na odcitanie sumy pri transakcii z uctu na ucet zo zdrojového účtu.
+        /// </summary>
+        /// <param name="id">id account</param>
+        /// <returns></returns>
         public bool UpdateSourceAccountAmount(int id)
         {
             string sqlInsertAccount = @" update Account
@@ -400,7 +493,11 @@ where id = @id";
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na pričítanie sumy pri transakcii z uctu na ucet do cieľového účtu.
+        /// </summary>
+        /// <param name="id">id account</param>
+        /// <returns></returns>
         public bool UpdateDestinationAccountAmount(int id)
         {
             string sqlInsertAccount = @" update Account
@@ -443,6 +540,10 @@ where id = @id";
             }
             return false;
         }
+        /// <summary>
+        /// Metoda na validáciu účtu.
+        /// </summary>
+        /// <param name="iban"></param>
         public void IsValidIBan(string iban)
         {
             try
@@ -454,7 +555,11 @@ where id = @id";
                 Debug.WriteLine(iex.Message);
             }
         }
-
+        /// <summary>
+        /// Metoda ktora mi vraciaList s údajmi o účte.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<string> GetAccountData(int id)
         {
             List<string> list = new List<string>();
@@ -500,7 +605,10 @@ where id = @id";
             }
             return list;
         }
-
+        /// <summary>
+        /// Metóda na generovanie IBAN.
+        /// </summary>
+        /// <returns></returns>
         public string GenerateIBAN()
         {
             Random random = new Random();

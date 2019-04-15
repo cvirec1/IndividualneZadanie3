@@ -14,6 +14,7 @@ namespace BankSystem
         ClientRepository clientRepository = new ClientRepository();
         CardRepository cardRepository = new CardRepository();
         TransactionRepository transactionRepository = new TransactionRepository();
+        AccountRepository accountRepository = new AccountRepository();
         public DataSet GetAccountsData(int id)
         {
             return clientRepository.FillDataSet(id);
@@ -41,6 +42,10 @@ namespace BankSystem
         public bool CancelSelectedCard(int id)
         {
             return cardRepository.CancelCard(id);
+        }
+        public bool CloseAccount(int id)
+        {
+            return accountRepository.CloseAccount(id);
         }
     }
 }

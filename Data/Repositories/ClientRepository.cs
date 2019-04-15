@@ -13,6 +13,11 @@ namespace Data.Repositories
     public class ClientRepository:Connection
     {
         public int _clientID;
+        /// <summary>
+        /// Metoda na overenie existencie klienta podla idNUmber.
+        /// </summary>
+        /// <param name="id">idnumber</param>
+        /// <returns></returns>
         public bool FindClient(string id)
         {
             string sqlFindClient = @" select count(*) from client where idnumber = @idnumber;";
@@ -45,7 +50,11 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na ziskanie id klienta na zaklade idnumber.
+        /// </summary>
+        /// <param name="id">idnumber</param>
+        /// <returns></returns>
         public int GetClientID(string id)
         {
             int cislo = 0;
@@ -79,7 +88,11 @@ namespace Data.Repositories
             }
             return cislo;
         }
-
+        /// <summary>
+        /// Metoda na ziskanie dat klienta pre update metodu.
+        /// </summary>
+        /// <param name="id">id klienta</param>
+        /// <returns></returns>
         public List<string> GetClientData(int id)
         {            
             List<string> list = new List<string>();
@@ -127,7 +140,12 @@ namespace Data.Repositories
             }
             return list;
         }
-
+        /// <summary>
+        /// Metoda na update udajov klienta.
+        /// </summary>
+        /// <param name="client">client</param>
+        /// <param name="id">id klienta</param>
+        /// <returns></returns>
         public bool UpdateClient(Client client,int id)
         {
             string sqlUpdateClient = @" update client set firstname = @name,lastname = @surname,adress=@adress, idnumber=@idnumber, id_city=@city where id = @id;";
@@ -165,7 +183,11 @@ namespace Data.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Metoda na vlozenie noveho klienta.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public bool InsertClient(Client client)
         {
             string sqlInsertClient = @" insert into client (firstname,lastname,Adress,Id_City,IdNumber) output inserted.id values  (@name,@surname,@adress,@city,@idnumber);";
@@ -206,7 +228,11 @@ namespace Data.Repositories
         }
 
 
-
+        /// <summary>
+        /// Metoda na naplnenie dat do gridu.
+        /// </summary>
+        /// <param name="id">klient id</param>
+        /// <returns></returns>
         public DataSet FillDataSet(int id)
         {
             string sqlQuery = @"select a.id,a.id_client,FirstName,LastName,CreationDate,IBAN,c.IdNumber,amount,ActualOverFlow,OverFlowLimit from Account as a join Client as c on a.Id_Client = c.id where c.id = @id";
