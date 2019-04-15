@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cmdManageAccount = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.txbName = new System.Windows.Forms.TextBox();
             this.txbSurname = new System.Windows.Forms.TextBox();
             this.txbIDNumber = new System.Windows.Forms.TextBox();
@@ -37,6 +37,7 @@
             this.lblName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwAccounts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,17 +50,6 @@
             this.cmdManageAccount.Text = "Manage account";
             this.cmdManageAccount.UseVisualStyleBackColor = true;
             this.cmdManageAccount.Click += new System.EventHandler(this.cmdManageAccount_Click);
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.ForeColor = System.Drawing.Color.Indigo;
-            this.label4.Location = new System.Drawing.Point(136, 262);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(317, 91);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "^\r\nButton na menežovanie aktuálne zvoleného účtu v gride";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txbName
             // 
@@ -125,11 +115,17 @@
             this.label2.TabIndex = 18;
             this.label2.Text = "ID number :";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 15000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmAccounts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 364);
+            this.ClientSize = new System.Drawing.Size(594, 280);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblName);
@@ -137,7 +133,6 @@
             this.Controls.Add(this.txbIDNumber);
             this.Controls.Add(this.txbSurname);
             this.Controls.Add(this.txbName);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdManageAccount);
             this.Name = "frmAccounts";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -151,7 +146,6 @@
 
         #endregion
         private System.Windows.Forms.Button cmdManageAccount;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txbName;
         private System.Windows.Forms.TextBox txbSurname;
         private System.Windows.Forms.TextBox txbIDNumber;
@@ -159,5 +153,6 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer timer1;
     }
 }

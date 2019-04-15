@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgwTransactions = new System.Windows.Forms.DataGridView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwTransactions)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,6 +41,12 @@
             this.dgwTransactions.Name = "dgwTransactions";
             this.dgwTransactions.Size = new System.Drawing.Size(523, 309);
             this.dgwTransactions.TabIndex = 0;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // frmTransactions
             // 
@@ -57,5 +65,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgwTransactions;
+        private System.Windows.Forms.Timer timer1;
     }
 }

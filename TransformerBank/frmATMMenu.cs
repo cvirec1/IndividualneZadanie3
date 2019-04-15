@@ -112,5 +112,10 @@ namespace TransformerBank
                 btnWithdraw.ForeColor = Color.Red;
             }
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Data.Repositories
         }
         public DataSet FillDataSet()
         {
-            string sqlQuery = @"select Id_Transaction,Id_Account as odosielatel,Id_Destination_Account as prijemca,tr.Amount,tr.CreationDate,tr.ExecuteDate,tr.KS,tr.SS,tr.VS
+            string sqlQuery = @"select Id_Transaction,Id_Account as odosielatel,Id_Destination_Account as prijemca,tr.Amount,tr.CreationDate,tr.ExecuteDate,tr.KS,tr.SS,tr.VS,tr.transactiontype
   from AccountTransaction as atr
   join [Transaction] as tr on atr.Id_Transaction=tr.Id";
             DataSet ds = new DataSet();

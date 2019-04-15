@@ -36,5 +36,10 @@ namespace BankSystem
             dgwTransactions.DataMember = "Transaction";           
 
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            dgwTransactions.DataSource = transactionsViewModel.GetTransactionsData();
+        }
     }
 }

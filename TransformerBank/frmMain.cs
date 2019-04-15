@@ -43,5 +43,12 @@ namespace TransformerBank
         {
             counter = 0;
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            txbCardID.Text = "";
+            txbPIN.Text = "";
+            btnLogin.ForeColor = Color.Black;
+        }
     }
 }

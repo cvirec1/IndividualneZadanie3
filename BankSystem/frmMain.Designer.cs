@@ -39,15 +39,15 @@
             this.txbIdNumber = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgwBankData = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgwTopAccount = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgwAccountCount = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwBankData)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwTopAccount)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwAccountCount)).BeginInit();
@@ -97,11 +97,11 @@
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label2.Location = new System.Drawing.Point(320, 5);
+            this.label2.Location = new System.Drawing.Point(349, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(350, 86);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Vyhľadávacie políčko a tlačidlo na správu klienta\r\nV";
+            this.label2.Text = "Find account number of IDCard";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
@@ -167,17 +167,6 @@
             this.tabPage1.Text = "View Bank Data";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dgwTopAccount);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(293, 273);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Top 10 Accounts";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // dgwBankData
             // 
             this.dgwBankData.AllowUserToAddRows = false;
@@ -188,6 +177,17 @@
             this.dgwBankData.ReadOnly = true;
             this.dgwBankData.Size = new System.Drawing.Size(277, 258);
             this.dgwBankData.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dgwTopAccount);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(293, 273);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Top 10 Accounts";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dgwTopAccount
             // 
@@ -244,8 +244,8 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwBankData)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwTopAccount)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwAccountCount)).EndInit();

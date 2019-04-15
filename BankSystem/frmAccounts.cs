@@ -62,5 +62,10 @@ namespace BankSystem
         {
             indexA = (int)dgwAccounts.Rows[e.RowIndex].Cells[1].Value;
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            dgwAccounts.DataSource = viewModel.FilterAccountsData(txbName.Text, txbSurname.Text, txbIDNumber.Text);
+        }
     }
 }

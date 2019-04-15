@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnStateAccount = new System.Windows.Forms.Button();
             this.btnDeposit = new System.Windows.Forms.Button();
             this.btnLogOff = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.btn200 = new System.Windows.Forms.Button();
             this.btn500 = new System.Windows.Forms.Button();
             this.lblCustom = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwDataAccount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -204,6 +206,12 @@
             this.lblCustom.Text = "Custom :";
             this.lblCustom.Visible = false;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 100000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmATMMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,5 +257,6 @@
         private System.Windows.Forms.Button btn200;
         private System.Windows.Forms.Button btn500;
         private System.Windows.Forms.Label lblCustom;
+        private System.Windows.Forms.Timer timer1;
     }
 }
