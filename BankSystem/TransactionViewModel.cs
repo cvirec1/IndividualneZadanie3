@@ -45,5 +45,16 @@ namespace BankSystem
         {
             return accountRepository.UpdateDestinationAccountAmount(id);
         }
+
+        public bool InsertTTransaction(int source, int dest)
+        {
+            Transaction transaction = new Transaction();
+            transaction.Amount = _ammount;
+            transaction.TransacitonType = _type;
+            transaction.KS = _ks;
+            transaction.SS = _ss;
+            transaction.VS = _vs;
+            return transactionRepository.InsertTTransaction(transaction, source, dest);
+        }
     }
 }

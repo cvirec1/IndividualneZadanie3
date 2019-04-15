@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cmdUpdate = new System.Windows.Forms.Button();
             this.cmdNewTransaction = new System.Windows.Forms.Button();
             this.cmdCloseAccount = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             this.lblDailyLimit = new System.Windows.Forms.Label();
             this.nupdDailyLimit = new System.Windows.Forms.NumericUpDown();
             this.btnCancelCard = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupdDailyLimit)).BeginInit();
@@ -189,7 +191,7 @@
             this.dgwAcountData.Location = new System.Drawing.Point(12, 10);
             this.dgwAcountData.Name = "dgwAcountData";
             this.dgwAcountData.ReadOnly = true;
-            this.dgwAcountData.Size = new System.Drawing.Size(723, 73);
+            this.dgwAcountData.Size = new System.Drawing.Size(797, 93);
             this.dgwAcountData.TabIndex = 18;
             this.dgwAcountData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAcountData_CellContentClick);
             this.dgwAcountData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAcountData_RowEnter);
@@ -199,7 +201,7 @@
             this.dgwCardData.AllowUserToAddRows = false;
             this.dgwCardData.AllowUserToDeleteRows = false;
             this.dgwCardData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwCardData.Location = new System.Drawing.Point(741, 12);
+            this.dgwCardData.Location = new System.Drawing.Point(815, 12);
             this.dgwCardData.Name = "dgwCardData";
             this.dgwCardData.ReadOnly = true;
             this.dgwCardData.Size = new System.Drawing.Size(334, 234);
@@ -208,7 +210,7 @@
             // 
             // btnAllCard
             // 
-            this.btnAllCard.Location = new System.Drawing.Point(741, 256);
+            this.btnAllCard.Location = new System.Drawing.Point(815, 256);
             this.btnAllCard.Name = "btnAllCard";
             this.btnAllCard.Size = new System.Drawing.Size(96, 23);
             this.btnAllCard.TabIndex = 20;
@@ -218,7 +220,7 @@
             // 
             // btnActiveCard
             // 
-            this.btnActiveCard.Location = new System.Drawing.Point(833, 256);
+            this.btnActiveCard.Location = new System.Drawing.Point(907, 256);
             this.btnActiveCard.Name = "btnActiveCard";
             this.btnActiveCard.Size = new System.Drawing.Size(95, 23);
             this.btnActiveCard.TabIndex = 21;
@@ -228,7 +230,7 @@
             // 
             // btnExpiredCard
             // 
-            this.btnExpiredCard.Location = new System.Drawing.Point(923, 256);
+            this.btnExpiredCard.Location = new System.Drawing.Point(997, 256);
             this.btnExpiredCard.Name = "btnExpiredCard";
             this.btnExpiredCard.Size = new System.Drawing.Size(76, 23);
             this.btnExpiredCard.TabIndex = 22;
@@ -238,7 +240,7 @@
             // 
             // btnAddCard
             // 
-            this.btnAddCard.Location = new System.Drawing.Point(808, 368);
+            this.btnAddCard.Location = new System.Drawing.Point(882, 368);
             this.btnAddCard.Name = "btnAddCard";
             this.btnAddCard.Size = new System.Drawing.Size(75, 23);
             this.btnAddCard.TabIndex = 23;
@@ -250,7 +252,7 @@
             // chbxAddCard
             // 
             this.chbxAddCard.AutoSize = true;
-            this.chbxAddCard.Location = new System.Drawing.Point(741, 291);
+            this.chbxAddCard.Location = new System.Drawing.Point(815, 291);
             this.chbxAddCard.Name = "chbxAddCard";
             this.chbxAddCard.Size = new System.Drawing.Size(95, 17);
             this.chbxAddCard.TabIndex = 24;
@@ -261,7 +263,7 @@
             // lblDailyLimit
             // 
             this.lblDailyLimit.AutoSize = true;
-            this.lblDailyLimit.Location = new System.Drawing.Point(742, 339);
+            this.lblDailyLimit.Location = new System.Drawing.Point(816, 339);
             this.lblDailyLimit.Name = "lblDailyLimit";
             this.lblDailyLimit.Size = new System.Drawing.Size(60, 13);
             this.lblDailyLimit.TabIndex = 25;
@@ -270,7 +272,7 @@
             // 
             // nupdDailyLimit
             // 
-            this.nupdDailyLimit.Location = new System.Drawing.Point(808, 337);
+            this.nupdDailyLimit.Location = new System.Drawing.Point(882, 337);
             this.nupdDailyLimit.Name = "nupdDailyLimit";
             this.nupdDailyLimit.Size = new System.Drawing.Size(120, 20);
             this.nupdDailyLimit.TabIndex = 26;
@@ -278,7 +280,7 @@
             // 
             // btnCancelCard
             // 
-            this.btnCancelCard.Location = new System.Drawing.Point(999, 256);
+            this.btnCancelCard.Location = new System.Drawing.Point(1073, 256);
             this.btnCancelCard.Name = "btnCancelCard";
             this.btnCancelCard.Size = new System.Drawing.Size(76, 23);
             this.btnCancelCard.TabIndex = 27;
@@ -286,11 +288,17 @@
             this.btnCancelCard.UseVisualStyleBackColor = true;
             this.btnCancelCard.Click += new System.EventHandler(this.button1_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmClientManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 410);
+            this.ClientSize = new System.Drawing.Size(1161, 410);
             this.Controls.Add(this.btnCancelCard);
             this.Controls.Add(this.nupdDailyLimit);
             this.Controls.Add(this.lblDailyLimit);
@@ -347,5 +355,6 @@
         private System.Windows.Forms.Label lblDailyLimit;
         private System.Windows.Forms.NumericUpDown nupdDailyLimit;
         private System.Windows.Forms.Button btnCancelCard;
+        private System.Windows.Forms.Timer timer1;
     }
 }

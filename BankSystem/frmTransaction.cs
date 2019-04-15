@@ -15,6 +15,7 @@ namespace BankSystem
         char typeTr;
         int idAccSource;
         int idAccDest;
+        int IDClient;
         TransactionViewModel transactionViewModel = new TransactionViewModel();
         public frmTransaction()
         {
@@ -23,6 +24,7 @@ namespace BankSystem
         public frmTransaction(char type,int id)
         {
             InitializeComponent();
+            IDClient = id;
             if(type == 'W')
             {
                 typeTr = type;
@@ -66,6 +68,7 @@ namespace BankSystem
             }
             else
             {
+                typeTr = type;
                 dgwDestination.DataSource = transactionViewModel.FillDestination(id);
                 dgwDestination.DataMember = "Account";
                 dgwDestination.Columns["Id"].Visible = false;
@@ -113,11 +116,12 @@ namespace BankSystem
                 if (transactionViewModel.InsertTransaction(idAccDest))
                 {
                     btnSubmit.ForeColor = Color.Green;
+                    transactionViewModel.UpdateAmount(idAccDest);
+                    Close();
                 }
                 else
                 {
-                    btnSubmit.ForeColor = Color.Green;
-                    transactionViewModel.UpdateAmount(idAccDest);
+                    btnSubmit.ForeColor = Color.Red;                    
                 }
             }else if(typeTr == 'W')
             {
@@ -126,11 +130,12 @@ namespace BankSystem
                 if (transactionViewModel.InsertTransaction(idAccSource))
                 {
                     btnSubmit.ForeColor = Color.Green;
+                    transactionViewModel.UpdateAmount(idAccSource);
+                    Close();
                 }
                 else
                 {
-                    btnSubmit.ForeColor = Color.Green;
-                    transactionViewModel.UpdateAmount(idAccSource);
+                    btnSubmit.ForeColor = Color.Red;                    
                 }
             }
             else
@@ -140,18 +145,80 @@ namespace BankSystem
                 transactionViewModel._ks = int.Parse(txbKS.Text);
                 transactionViewModel._ss = int.Parse(txbSS.Text);
                 transactionViewModel._vs = int.Parse(txbVS.Text);
-                if (transactionViewModel.InsertTransaction(idAccSource))
-                {
-                    btnSubmit.ForeColor = Color.Green;
-                }
-                else
+                if (transactionViewModel.InsertTTransaction(idAccSource,idAccDest))
                 {
                     btnSubmit.ForeColor = Color.Green;
                     transactionViewModel.UpdateSourceAmount(idAccSource);
                     transactionViewModel.UpdateDestinationAmount(idAccDest);
+                    Close();
+                }
+                else
+                {
+                    btnSubmit.ForeColor = Color.Red;                    
                 }
             }
             
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (typeTr == 'W')
+            {
+
+                dgwSource.Visible = true;
+                dgwSource.DataSource = transactionViewModel.FillSource(IDClient);
+                dgwSource.DataMember = "Account";
+                dgwSource.Columns["Id"].Visible = false;
+                dgwDestination.Visible = false;
+                lbDestination.Visible = false;
+                txbKS.Visible = false;
+                txbSS.Visible = false;
+                txbVS.Visible = false;
+                lbKS.Visible = false;
+                lbSS.Visible = false;
+                lbVS.Visible = false;
+                if (dgwSource.RowCount > 0)
+                {
+                    idAccSource = (int)dgwSource.Rows[0].Cells[0].Value;
+                }
+
+            }
+            else if (typeTr == 'D')
+            {
+                lbSource.Visible = false;
+                dgwDestination.Visible = true;
+                dgwDestination.DataSource = transactionViewModel.FillSource(IDClient);
+                dgwDestination.DataMember = "Account";
+                dgwDestination.Columns["Id"].Visible = false;
+                dgwSource.Visible = false;
+                txbKS.Visible = false;
+                txbSS.Visible = false;
+                txbVS.Visible = false;
+                lbKS.Visible = false;
+                lbSS.Visible = false;
+                lbVS.Visible = false;
+                if (dgwDestination.RowCount > 0)
+                {
+                    idAccDest = (int)dgwDestination.Rows[0].Cells[0].Value;
+                }
+            }
+            else
+            {
+                dgwDestination.DataSource = transactionViewModel.FillDestination(IDClient);
+                dgwDestination.DataMember = "Account";
+                dgwDestination.Columns["Id"].Visible = false;
+                if (dgwDestination.RowCount > 0)
+                {
+                    idAccDest = (int)dgwDestination.Rows[0].Cells[0].Value;
+                }
+                dgwSource.DataSource = transactionViewModel.FillSource(IDClient);
+                dgwSource.DataMember = "Account";
+                dgwSource.Columns["Id"].Visible = false;
+                if (dgwSource.RowCount > 0)
+                {
+                    idAccSource = (int)dgwSource.Rows[0].Cells[0].Value;
+                }
+            }
         }
     }
 

@@ -161,6 +161,41 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
             return false;
         }
 
+        public string GetAccountAmount(int id)
+        {
+            string amount;
+            string sqlInsertAccount = @" select Amount from Account where id = @id;";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;                            
+                            amount = sqlCmd.ExecuteScalar().ToString();
+                            if (amount.Length > 0)
+                            {
+                                return amount;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return amount;
+        }
+
         public bool UpdateAccount(Account account, int accountID)
         {
             string sqlInsertAccount = @" update Account set Amount=@amount,OverFlowLimit=@limit

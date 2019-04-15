@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txbVS = new System.Windows.Forms.TextBox();
             this.txbSS = new System.Windows.Forms.TextBox();
             this.txbKS = new System.Windows.Forms.TextBox();
@@ -42,6 +43,7 @@
             this.dgwDestination = new System.Windows.Forms.DataGridView();
             this.lbSource = new System.Windows.Forms.Label();
             this.lbDestination = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwDestination)).BeginInit();
             this.SuspendLayout();
@@ -172,6 +174,12 @@
             this.lbDestination.TabIndex = 20;
             this.lbDestination.Text = "Destination Account :";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,7 +199,7 @@
             this.Controls.Add(this.txbKS);
             this.Controls.Add(this.txbSS);
             this.Controls.Add(this.txbVS);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmTransaction";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmTransaction";
@@ -217,5 +225,6 @@
         private System.Windows.Forms.DataGridView dgwDestination;
         private System.Windows.Forms.Label lbSource;
         private System.Windows.Forms.Label lbDestination;
+        private System.Windows.Forms.Timer timer1;
     }
 }

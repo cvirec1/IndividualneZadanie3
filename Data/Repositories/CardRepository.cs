@@ -14,6 +14,7 @@ namespace Data.Repositories
     public class CardRepository:Connection
     {
         int _cardID;
+        int _accountID;
         public DataSet FillDataSet(int id)
         {
             string sqlQuery = @"select c.[Id]
@@ -203,6 +204,71 @@ namespace Data.Repositories
                 throw e;
             }
             return false;
+        }
+
+        public bool ControlCard(int id,int pin)
+        {
+            string sqlCheckCard = @" select COUNT(*) from [Card] where id = @id and pin =@pin and ExpireDate>GETDATE();";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlCheckCard, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            sqlCmd.Parameters.Add("@pin", SqlDbType.Int).Value = pin;
+                            if ((int)sqlCmd.ExecuteScalar() == 1)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public int GetAccountID(int id)
+        {
+            string sqlCheckCard = @" select Id_Account from Card where id =@id;";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlCheckCard, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                            return (int)sqlCmd.ExecuteScalar();
+                            
+                            
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }            
         }
 
         public int GenerateCardNumber()

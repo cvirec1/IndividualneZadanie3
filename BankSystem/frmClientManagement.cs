@@ -17,6 +17,7 @@ namespace BankSystem
         int indexCard;
         int indexAccount;
         int indexClient;
+        int idclient;
         /// <summary>
         /// Backup, do not really use :)
         /// </summary>
@@ -29,8 +30,11 @@ namespace BankSystem
         public frmClientManagement(int clientId)
         {
             InitializeComponent();
+            idclient = clientId;
             dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(clientId);
             dgwAcountData.DataMember = "Account";
+            dgwAcountData.Columns["Id"].Visible = false;
+            dgwAcountData.Columns["Id_client"].Visible = false;
             dgwCardData.DataSource = clientManagementViewModel.GetCardsData(clientId);
             dgwCardData.DataMember = "Card";
             if (dgwCardData.RowCount > 0)
@@ -174,7 +178,30 @@ namespace BankSystem
 
         private void dgwAcountData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(idclient);
+            dgwAcountData.DataMember = "Account";
+            dgwAcountData.Columns["Id"].Visible = false;
+            dgwAcountData.Columns["Id_client"].Visible = false;
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            InitializeComponent();            
+            dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(number);
+            dgwAcountData.DataMember = "Account";
+            dgwAcountData.Columns["Id"].Visible = false;
+            dgwAcountData.Columns["Id_client"].Visible = false;
+            dgwCardData.DataSource = clientManagementViewModel.GetCardsData(number);
+            dgwCardData.DataMember = "Card";
+            if (dgwCardData.RowCount > 0)
+            {
+                indexCard = (int)dgwCardData.Rows[0].Cells[0].Value;
+            }
+            if (dgwAcountData.RowCount > 0)
+            {
+                indexAccount = (int)dgwAcountData.Rows[0].Cells[0].Value;
+                indexClient = (int)dgwAcountData.Rows[0].Cells[1].Value;
+            }
         }
     }
 }

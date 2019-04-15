@@ -158,11 +158,67 @@ namespace Data.Repositories
                         {
                             sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
                             sqlCmd.Parameters.Add("@tr", SqlDbType.Int).Value = transactionID;
-                            int stav = (int)sqlCmd.ExecuteScalar();
-                            if (stav > 0)
+                            if (sqlCmd.ExecuteNonQuery() > 0)
                             {
                                 return true;
                             }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return false;
+        }
+
+        public bool InsertTTransaction(Transaction transaction, int source,int dest)
+        {
+            int transactionID = 0;
+            string sqlInsertTransaction = @"insert into [Transaction] (Amount,TransactionType,vs,ks,ss)
+  output inserted.id values (@amount,@type,@vs,@ks,@ss);";
+            string sqlInsertAccountTransaction = @"insert into AccountTransaction (Id_Account,Id_Transaction,Id_Destination_Account)
+  values (@id,@tr,@de);";
+
+
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertTransaction, connection))
+                        {
+                            sqlCmd.Parameters.Add("@amount", SqlDbType.Decimal).Value = transaction.Amount;
+                            sqlCmd.Parameters.Add("@type", SqlDbType.Char).Value = transaction.TransacitonType;
+                            sqlCmd.Parameters.Add("@vs", SqlDbType.Int).Value = transaction.VS;
+                            sqlCmd.Parameters.Add("@ks", SqlDbType.Int).Value = transaction.KS;
+                            sqlCmd.Parameters.Add("@ss", SqlDbType.Int).Value = transaction.SS;
+                            transactionID = (int)sqlCmd.ExecuteScalar();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccountTransaction, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = source;
+                            sqlCmd.Parameters.Add("@tr", SqlDbType.Int).Value = transactionID;
+                            sqlCmd.Parameters.Add("@de", SqlDbType.Int).Value = dest;
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }                            
                         }
                     }
                     catch (Exception e)
