@@ -91,6 +91,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BankSystem\BankSystem.csproj">
+      <Project>{FE73468D-94E6-4E84-815F-495B4720F266}</Project>
+      <Name>BankSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Controls\Support.csproj">
       <Project>{125d687e-7153-4c25-9d39-fa3fd7f1145a}</Project>
       <Name>Support</Name>
