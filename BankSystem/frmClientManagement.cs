@@ -185,8 +185,7 @@ namespace BankSystem
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            InitializeComponent();            
+        {                       
             dgwAcountData.DataSource = clientManagementViewModel.GetAccountsData(number);
             dgwAcountData.DataMember = "Account";
             dgwAcountData.Columns["Id"].Visible = false;

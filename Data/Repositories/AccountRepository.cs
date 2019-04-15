@@ -122,6 +122,88 @@ join Client as c on a.Id_Client=c.id where a.id!= @id and (a.ExpireDate is null)
             return ds;
         }
 
+        public DataSet ViewBankData()
+        {
+            string sqlQuery = @"select b.Name,sum(Amount) from Account as a
+  join Bank as b on a.Id_Bank=b.Id
+  where b.Id=7
+  group by b.Id,b.Name";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                    {                        
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                        adapter.Fill(ds, "Account");
+                        DataTable dt = ds.Tables["Account"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return ds;
+        }
+        public DataSet ViewTopAccount()
+        {
+            string sqlQuery = @"select top 10 c.FirstName,c.LastName,Amount,IBAN from Account as a
+  join Client as c on a.Id_Client=c.id
+  where Id_Bank = 7
+  order by Amount desc";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                        adapter.Fill(ds, "Account");
+                        DataTable dt = ds.Tables["Account"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return ds;
+        }
+        public DataSet ViewAccountCount()
+        {
+            string sqlQuery = @"select b.Name,count(*) as AccountCount from Account as a
+  join Bank as b on a.Id_Bank=b.Id
+  where Id_Bank = 7
+  group by b.Name";
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    using (SqlCommand sqlCmd = new SqlCommand(sqlQuery, connection))
+                    {
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+                        adapter.Fill(ds, "Account");
+                        DataTable dt = ds.Tables["Account"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return ds;
+        }
+
         public bool InsertAccount(Account account)
         {
             string sqlInsertAccount = @" insert into Account (Id_Client,Id_Bank,Amount,IBAN,OverFlowLimit)

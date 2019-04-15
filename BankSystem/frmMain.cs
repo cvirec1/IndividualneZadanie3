@@ -19,9 +19,12 @@ namespace BankSystem
         {
             InitializeComponent();
             Generator generator = new Generator();
-            //IEnumerable<string> aaa = generator.GetRandomBanks(10);
-            //IEnumerable<string> bbb = generator.GetRandomAddresses(10);
-            //IEnumerable<string> ccc = generator.GetRandomPeople(10);
+            dgwBankData.DataSource = mainViewModel.ViewBankData();
+            dgwBankData.DataMember = "Account";
+            dgwTopAccount.DataSource = mainViewModel.ViewTopAccount();
+            dgwTopAccount.DataMember = "Account";
+            dgwAccountCount.DataSource = mainViewModel.ViewAccountCount();
+            dgwAccountCount.DataMember = "Account";
         }
 
         private void cmdFindClient_Click(object sender, EventArgs e)
@@ -62,6 +65,11 @@ namespace BankSystem
             {
                 newForm.ShowDialog();
             }
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
