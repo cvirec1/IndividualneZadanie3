@@ -86,6 +86,42 @@ namespace Data.Repositories
                             sqlCmd.Parameters.Add("@iban", SqlDbType.NVarChar).Value = account.IBAN;
                             sqlCmd.Parameters.Add("@limit", SqlDbType.Int).Value = account.OverFlowLimit;
                             _accountID = (int)sqlCmd.ExecuteScalar();
+                            if (_accountID > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public bool UpdateAccount(Account account, int accountID)
+        {
+            string sqlInsertAccount = @" update Account set Amount=@amount,OverFlowLimit=@limit
+  where id = @id";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@amount", SqlDbType.Decimal).Value = account.Amount;                          
+                            sqlCmd.Parameters.Add("@limit", SqlDbType.Int).Value = account.OverFlowLimit;
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = account.ID;
                             if (sqlCmd.ExecuteNonQuery() > 0)
                             {
                                 return true;
@@ -118,13 +154,60 @@ namespace Data.Repositories
             }
         }
 
-        
+        public List<string> GetAccountData(int id)
+        {
+            List<string> list = new List<string>();
+            string sqlGetAccountData = @" select IBAN,Amount,OverFlowLimit from Account where id = @id;";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlGetAccountData, connection))
+                        {
+                            sqlCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = id;
+                            try
+                            {
+                                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        list.Add(reader.GetString(0));
+                                        list.Add(reader.GetDecimal(1).ToString());
+                                        list.Add(reader.GetDecimal(2).ToString());                                        
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine(e.Message);
+                            }
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return list;
+        }
+
         public string GenerateIBAN()
         {
+            Random random = new Random();
+            
             Iban iban = new IbanBuilder().CountryCode(CountryCode.GetCountryCode("SK"))
-                .BankCode("1100")
-                .AccountNumberPrefix("000000")
-                .AccountNumber("3650018070")
+                .BankCode("1111")
+                .AccountNumberPrefix("666666")
+                .AccountNumber(random.Next(1000000000, Int32.MaxValue).ToString())
                 .Build();
             IsValidIBan(iban.ToString());
             return iban.ToString();                          

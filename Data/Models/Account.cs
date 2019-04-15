@@ -13,9 +13,9 @@ namespace Data.Models
         public int ID_Bank { get; set; }
         public DateTime CreationDate { get;private set; }
         public DateTime ExpireDate { get; set; }
-        public decimal Amount { get; private set; }
-        public string IBAN { get;private set; }
-        public decimal ActualOverFlow { get;private set; }
+        public decimal Amount { get;  set; }
+        public string IBAN { get;set; }
+        public decimal ActualOverFlow { get; set; }
         public decimal OverFlowLimit { get; set; }
     }
 }

@@ -49,6 +49,9 @@
             this.txbOverLimit = new System.Windows.Forms.TextBox();
             this.btnAccountInsert = new System.Windows.Forms.Button();
             this.btnIBAN = new System.Windows.Forms.Button();
+            this.txbAmount = new System.Windows.Forms.TextBox();
+            this.lblAmount = new System.Windows.Forms.Label();
+            this.lblAccountFailed = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txbFirstName
@@ -206,7 +209,7 @@
             // lblOverLimit
             // 
             this.lblOverLimit.AutoSize = true;
-            this.lblOverLimit.Location = new System.Drawing.Point(359, 136);
+            this.lblOverLimit.Location = new System.Drawing.Point(359, 179);
             this.lblOverLimit.Name = "lblOverLimit";
             this.lblOverLimit.Size = new System.Drawing.Size(82, 13);
             this.lblOverLimit.TabIndex = 17;
@@ -224,7 +227,7 @@
             // 
             // txbOverLimit
             // 
-            this.txbOverLimit.Location = new System.Drawing.Point(456, 129);
+            this.txbOverLimit.Location = new System.Drawing.Point(456, 172);
             this.txbOverLimit.Name = "txbOverLimit";
             this.txbOverLimit.Size = new System.Drawing.Size(100, 20);
             this.txbOverLimit.TabIndex = 19;
@@ -232,13 +235,14 @@
             // 
             // btnAccountInsert
             // 
-            this.btnAccountInsert.Location = new System.Drawing.Point(402, 179);
+            this.btnAccountInsert.Location = new System.Drawing.Point(402, 204);
             this.btnAccountInsert.Name = "btnAccountInsert";
             this.btnAccountInsert.Size = new System.Drawing.Size(154, 23);
             this.btnAccountInsert.TabIndex = 20;
             this.btnAccountInsert.Text = "Create Account";
             this.btnAccountInsert.UseVisualStyleBackColor = true;
             this.btnAccountInsert.Visible = false;
+            this.btnAccountInsert.Click += new System.EventHandler(this.btnAccountInsert_Click);
             // 
             // btnIBAN
             // 
@@ -251,11 +255,43 @@
             this.btnIBAN.Visible = false;
             this.btnIBAN.Click += new System.EventHandler(this.btnIBAN_Click);
             // 
+            // txbAmount
+            // 
+            this.txbAmount.Location = new System.Drawing.Point(456, 140);
+            this.txbAmount.Name = "txbAmount";
+            this.txbAmount.Size = new System.Drawing.Size(100, 20);
+            this.txbAmount.TabIndex = 23;
+            this.txbAmount.Visible = false;
+            // 
+            // lblAmount
+            // 
+            this.lblAmount.AutoSize = true;
+            this.lblAmount.Location = new System.Drawing.Point(359, 147);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(49, 13);
+            this.lblAmount.TabIndex = 22;
+            this.lblAmount.Text = "Amount :";
+            this.lblAmount.Visible = false;
+            // 
+            // lblAccountFailed
+            // 
+            this.lblAccountFailed.AutoSize = true;
+            this.lblAccountFailed.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblAccountFailed.Location = new System.Drawing.Point(372, 8);
+            this.lblAccountFailed.Name = "lblAccountFailed";
+            this.lblAccountFailed.Size = new System.Drawing.Size(201, 13);
+            this.lblAccountFailed.TabIndex = 24;
+            this.lblAccountFailed.Text = "Insert account failed. Please insert again.";
+            this.lblAccountFailed.Visible = false;
+            // 
             // frmAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 324);
+            this.Controls.Add(this.lblAccountFailed);
+            this.Controls.Add(this.txbAmount);
+            this.Controls.Add(this.lblAmount);
             this.Controls.Add(this.btnIBAN);
             this.Controls.Add(this.btnAccountInsert);
             this.Controls.Add(this.txbOverLimit);
@@ -308,5 +344,8 @@
         private System.Windows.Forms.TextBox txbOverLimit;
         private System.Windows.Forms.Button btnAccountInsert;
         private System.Windows.Forms.Button btnIBAN;
+        private System.Windows.Forms.TextBox txbAmount;
+        private System.Windows.Forms.Label lblAmount;
+        private System.Windows.Forms.Label lblAccountFailed;
     }
 }

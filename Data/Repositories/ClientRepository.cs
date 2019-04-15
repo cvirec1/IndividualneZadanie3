@@ -80,11 +80,11 @@ namespace Data.Repositories
             return cislo;
         }
 
-        public bool UpdateClient(int id ,string name,string surname, string adress, string city,string postalcode, string idnumber)
-        {
-            string sqlUpdateClient = @" update client set firstname = @name,lastname = @surname,adress=@adress, idnumber=@idnumber, id_city=@city where id = @id;";
-            string sqlSelectCity = @" select id from city where name = @cityname;";
-            int cityId;
+        public List<string> GetClientData(int id)
+        {            
+            List<string> list = new List<string>();
+            string sqlGetClientData = @" select FirstName,LastName,Adress,ci.Name,IdNumber from Client as cl
+                                        join City as ci on cl.Id_City=ci.Id where cl.id = @id;";
             try
             {
                 using (SqlConnection connection = base.CreateConnection())
@@ -92,18 +92,47 @@ namespace Data.Repositories
                     connection.Open();
                     try
                     {
-                        using (SqlCommand sqlCmd = new SqlCommand(sqlSelectCity, connection))
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlGetClientData, connection))
                         {
-                            sqlCmd.Parameters.Add("@cityname", SqlDbType.Int).Value = city;
-                            cityId = (int)sqlCmd.ExecuteScalar();                            
+                            sqlCmd.Parameters.Add("@id", SqlDbType.NVarChar).Value = id;
+                            try
+                            {
+                                using(SqlDataReader reader = sqlCmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        list.Add(reader.GetString(0));
+                                        list.Add(reader.GetString(1));
+                                        list.Add(reader.GetString(2));
+                                        list.Add(reader.GetString(3));
+                                        list.Add(reader.GetString(4));
+                                    }
+                                }
+                            }catch(Exception e)
+                            {
+                                Debug.WriteLine(e.Message);
+                            }                            
+                            
                         }
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        Debug.WriteLine(e.Message);
                     }
-
                 }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return list;
+        }
+
+        public bool UpdateClient(Client client,int id)
+        {
+            string sqlUpdateClient = @" update client set firstname = @name,lastname = @surname,adress=@adress, idnumber=@idnumber, id_city=@city where id = @id;";
+            try
+            {                
                 using (SqlConnection connection = base.CreateConnection())
                 {
                     connection.Open();
@@ -111,11 +140,11 @@ namespace Data.Repositories
                     {
                         using (SqlCommand sqlCmd = new SqlCommand(sqlUpdateClient, connection))
                         {
-                            sqlCmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = name;
-                            sqlCmd.Parameters.Add("@surname", SqlDbType.NVarChar).Value = surname;
-                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = idnumber;
-                            sqlCmd.Parameters.Add("@adress", SqlDbType.NVarChar).Value = adress;
-                            sqlCmd.Parameters.Add("@city", SqlDbType.Int).Value = cityId;
+                            sqlCmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = client.FirstName;
+                            sqlCmd.Parameters.Add("@surname", SqlDbType.NVarChar).Value = client.LastName;
+                            sqlCmd.Parameters.Add("@idnumber", SqlDbType.NVarChar).Value = client.IDNumber;
+                            sqlCmd.Parameters.Add("@adress", SqlDbType.NVarChar).Value = client.Adress;
+                            sqlCmd.Parameters.Add("@city", SqlDbType.Int).Value = client.ID_City;
                             sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
                             if (sqlCmd.ExecuteNonQuery() > 0)
                             {
@@ -156,7 +185,7 @@ namespace Data.Repositories
                             sqlCmd.Parameters.Add("@adress", SqlDbType.NVarChar).Value = client.Adress;
                             sqlCmd.Parameters.Add("@city", SqlDbType.Int).Value = client.ID_City;
                             _clientID = (int)sqlCmd.ExecuteScalar();
-                            if(sqlCmd.ExecuteNonQuery() > 0)
+                            if(_clientID > 0)
                             {
                                 return true;
                             }
@@ -176,9 +205,11 @@ namespace Data.Repositories
             return false;
         }
 
+
+
         public DataSet FillDataSet(int id)
         {
-            string sqlQuery = @"select a.id,FirstName,LastName,CreationDate,IBAN,c.IdNumber from Account as a join Client as c on a.Id_Client = c.id where c.id = @id";
+            string sqlQuery = @"select a.id,a.id_client,FirstName,LastName,CreationDate,IBAN,c.IdNumber,amount,ActualOverFlow,OverFlowLimit from Account as a join Client as c on a.Id_Client = c.id where c.id = @id";
             DataSet ds = new DataSet();
             try
             {

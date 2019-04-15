@@ -45,8 +45,14 @@
             this.btnAllCard = new System.Windows.Forms.Button();
             this.btnActiveCard = new System.Windows.Forms.Button();
             this.btnExpiredCard = new System.Windows.Forms.Button();
+            this.btnAddCard = new System.Windows.Forms.Button();
+            this.chbxAddCard = new System.Windows.Forms.CheckBox();
+            this.lblDailyLimit = new System.Windows.Forms.Label();
+            this.nupdDailyLimit = new System.Windows.Forms.NumericUpDown();
+            this.btnCancelCard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupdDailyLimit)).BeginInit();
             this.SuspendLayout();
             // 
             // cmdUpdate
@@ -182,18 +188,20 @@
             this.dgwAcountData.Name = "dgwAcountData";
             this.dgwAcountData.Size = new System.Drawing.Size(723, 73);
             this.dgwAcountData.TabIndex = 18;
+            this.dgwAcountData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwAcountData_RowEnter);
             // 
             // dgwCardData
             // 
             this.dgwCardData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwCardData.Location = new System.Drawing.Point(741, 12);
             this.dgwCardData.Name = "dgwCardData";
-            this.dgwCardData.Size = new System.Drawing.Size(285, 234);
+            this.dgwCardData.Size = new System.Drawing.Size(334, 234);
             this.dgwCardData.TabIndex = 19;
+            this.dgwCardData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwCardData_RowEnter);
             // 
             // btnAllCard
             // 
-            this.btnAllCard.Location = new System.Drawing.Point(741, 255);
+            this.btnAllCard.Location = new System.Drawing.Point(741, 256);
             this.btnAllCard.Name = "btnAllCard";
             this.btnAllCard.Size = new System.Drawing.Size(96, 23);
             this.btnAllCard.TabIndex = 20;
@@ -203,9 +211,9 @@
             // 
             // btnActiveCard
             // 
-            this.btnActiveCard.Location = new System.Drawing.Point(843, 255);
+            this.btnActiveCard.Location = new System.Drawing.Point(833, 256);
             this.btnActiveCard.Name = "btnActiveCard";
-            this.btnActiveCard.Size = new System.Drawing.Size(85, 23);
+            this.btnActiveCard.Size = new System.Drawing.Size(95, 23);
             this.btnActiveCard.TabIndex = 21;
             this.btnActiveCard.Text = "Active Card";
             this.btnActiveCard.UseVisualStyleBackColor = true;
@@ -213,19 +221,74 @@
             // 
             // btnExpiredCard
             // 
-            this.btnExpiredCard.Location = new System.Drawing.Point(934, 255);
+            this.btnExpiredCard.Location = new System.Drawing.Point(923, 256);
             this.btnExpiredCard.Name = "btnExpiredCard";
-            this.btnExpiredCard.Size = new System.Drawing.Size(92, 23);
+            this.btnExpiredCard.Size = new System.Drawing.Size(76, 23);
             this.btnExpiredCard.TabIndex = 22;
             this.btnExpiredCard.Text = "Expired Card";
             this.btnExpiredCard.UseVisualStyleBackColor = true;
             this.btnExpiredCard.Click += new System.EventHandler(this.btnExpiredCard_Click);
             // 
+            // btnAddCard
+            // 
+            this.btnAddCard.Location = new System.Drawing.Point(808, 368);
+            this.btnAddCard.Name = "btnAddCard";
+            this.btnAddCard.Size = new System.Drawing.Size(75, 23);
+            this.btnAddCard.TabIndex = 23;
+            this.btnAddCard.Text = "Add card";
+            this.btnAddCard.UseVisualStyleBackColor = true;
+            this.btnAddCard.Visible = false;
+            this.btnAddCard.Click += new System.EventHandler(this.btnAddCard_Click);
+            // 
+            // chbxAddCard
+            // 
+            this.chbxAddCard.AutoSize = true;
+            this.chbxAddCard.Location = new System.Drawing.Point(741, 291);
+            this.chbxAddCard.Name = "chbxAddCard";
+            this.chbxAddCard.Size = new System.Drawing.Size(95, 17);
+            this.chbxAddCard.TabIndex = 24;
+            this.chbxAddCard.Text = "Add New Card";
+            this.chbxAddCard.UseVisualStyleBackColor = true;
+            this.chbxAddCard.CheckedChanged += new System.EventHandler(this.chbxAddCard_CheckedChanged);
+            // 
+            // lblDailyLimit
+            // 
+            this.lblDailyLimit.AutoSize = true;
+            this.lblDailyLimit.Location = new System.Drawing.Point(742, 339);
+            this.lblDailyLimit.Name = "lblDailyLimit";
+            this.lblDailyLimit.Size = new System.Drawing.Size(60, 13);
+            this.lblDailyLimit.TabIndex = 25;
+            this.lblDailyLimit.Text = "Daily Limit :";
+            this.lblDailyLimit.Visible = false;
+            // 
+            // nupdDailyLimit
+            // 
+            this.nupdDailyLimit.Location = new System.Drawing.Point(808, 337);
+            this.nupdDailyLimit.Name = "nupdDailyLimit";
+            this.nupdDailyLimit.Size = new System.Drawing.Size(120, 20);
+            this.nupdDailyLimit.TabIndex = 26;
+            this.nupdDailyLimit.Visible = false;
+            // 
+            // btnCancelCard
+            // 
+            this.btnCancelCard.Location = new System.Drawing.Point(999, 256);
+            this.btnCancelCard.Name = "btnCancelCard";
+            this.btnCancelCard.Size = new System.Drawing.Size(76, 23);
+            this.btnCancelCard.TabIndex = 27;
+            this.btnCancelCard.Text = "Cancel Card";
+            this.btnCancelCard.UseVisualStyleBackColor = true;
+            this.btnCancelCard.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmClientManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 410);
+            this.ClientSize = new System.Drawing.Size(1097, 410);
+            this.Controls.Add(this.btnCancelCard);
+            this.Controls.Add(this.nupdDailyLimit);
+            this.Controls.Add(this.lblDailyLimit);
+            this.Controls.Add(this.chbxAddCard);
+            this.Controls.Add(this.btnAddCard);
             this.Controls.Add(this.btnExpiredCard);
             this.Controls.Add(this.btnActiveCard);
             this.Controls.Add(this.btnAllCard);
@@ -248,7 +311,9 @@
             this.Text = "Client Management";
             ((System.ComponentModel.ISupportInitialize)(this.dgwAcountData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCardData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupdDailyLimit)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -270,5 +335,10 @@
         private System.Windows.Forms.Button btnAllCard;
         private System.Windows.Forms.Button btnActiveCard;
         private System.Windows.Forms.Button btnExpiredCard;
+        private System.Windows.Forms.Button btnAddCard;
+        private System.Windows.Forms.CheckBox chbxAddCard;
+        private System.Windows.Forms.Label lblDailyLimit;
+        private System.Windows.Forms.NumericUpDown nupdDailyLimit;
+        private System.Windows.Forms.Button btnCancelCard;
     }
 }

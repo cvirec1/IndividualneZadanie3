@@ -16,6 +16,12 @@ namespace BankSystem
         public string _firstName;
         public string _lastName;
         public string _adress;
+        public int _id_client;
+        public int _id_bank = 7;
+        public decimal _amount;
+        public string _iban;
+        public decimal _overFlow;
+        
         ClientRepository clientRepository = new ClientRepository();
         CityRepository cityRepository = new CityRepository();
         AccountRepository accountRepository = new AccountRepository();
@@ -30,7 +36,7 @@ namespace BankSystem
             client.Adress = _adress;
             return clientRepository.InsertClient(client);
         }
-        public bool InsertAccount()
+        public bool UpdateClient(int clientID)
         {
             Client client = new Client();
             client.IDNumber = _idNumber;
@@ -38,7 +44,36 @@ namespace BankSystem
             client.FirstName = _firstName;
             client.LastName = _lastName;
             client.Adress = _adress;
-            return clientRepository.InsertClient(client);
+            return clientRepository.UpdateClient(client,clientID);
+        }
+        public List<string> GetClientData(int id)
+        {
+            List<string> list = clientRepository.GetClientData(id);
+            return list;
+            
+        }
+        public List<string> GetAccountData(int id)
+        {
+            List<string> list = accountRepository.GetAccountData(id);
+            return list;
+        }
+        public bool InsertAccount()
+        {
+            Account account = new Account();
+            account.ID_Client = _id_client;
+            account.ID_Bank = _id_bank;
+            account.Amount = _amount;
+            account.IBAN = _iban;
+            account.OverFlowLimit = _overFlow;
+            return accountRepository.InsertAccount(account);
+        }
+        public bool UpdateAccount(int accountID)
+        {
+            Account account = new Account();
+            account.Amount = _amount;            
+            account.OverFlowLimit = _overFlow;
+            return accountRepository.UpdateAccount(account, accountID);
+            
         }
         public DataSet FillComboBoxCity()
         {

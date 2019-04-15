@@ -34,5 +34,13 @@ namespace BankSystem
         {
             return transactionRepository.GetAccountID(id);
         }
+        public bool InsertNewCard(int limitCard, int id)
+        {
+            return cardRepository.InsertCard(limitCard, id);
+        }
+        public bool CancelSelectedCard(int id)
+        {
+            return cardRepository.CancelCard(id);
+        }
     }
 }

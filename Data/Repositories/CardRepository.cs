@@ -13,7 +13,7 @@ namespace Data.Repositories
 {
     public class CardRepository:Connection
     {
-
+        int _cardID;
         public DataSet FillDataSet(int id)
         {
             string sqlQuery = @"select c.[Id]
@@ -131,6 +131,90 @@ namespace Data.Repositories
                 Debug.WriteLine(e.Message);
             }
             return ds;
+        }
+
+        public bool InsertCard(int limit,int id)        
+        {
+            string sqlInsertAccount = @" insert into Card (number,dailyLimit,id_account,pin)
+  output inserted.id values (@number,@dailylimit,@idAccount,@pin);";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlInsertAccount, connection))
+                        {
+                            sqlCmd.Parameters.Add("@number", SqlDbType.Int).Value = GenerateCardNumber();
+                            sqlCmd.Parameters.Add("@dailylimit", SqlDbType.Int).Value = limit;
+                            sqlCmd.Parameters.Add("@idAccount", SqlDbType.Int).Value = id;
+                            sqlCmd.Parameters.Add("@pin", SqlDbType.Char).Value = GenerateCardPIN();
+                           
+                            _cardID = (int)sqlCmd.ExecuteScalar();
+                            if (_cardID > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public bool CancelCard(int id)
+        {
+            string sqlCancelCard = @" update card set expiredate = getdate() where id = @id;";
+            try
+            {
+                using (SqlConnection connection = base.CreateConnection())
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlCommand sqlCmd = new SqlCommand(sqlCancelCard, connection))
+                        {                            
+                            sqlCmd.Parameters.Add("@id", SqlDbType.Int).Value = id;                            
+                            if (sqlCmd.ExecuteNonQuery() > 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
+
+        public int GenerateCardNumber()
+        {
+            Random random = new Random();            
+            return random.Next(100000000,int.MaxValue);
+        }
+
+        public string GenerateCardPIN()
+        {
+            Random random = new Random();
+            return random.Next(1000, 9999).ToString();
         }
     }
 }
